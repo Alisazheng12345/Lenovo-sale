@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form(action="index" method="post")
+    div
+      span 用户名
+      input(name="username" type="text")
+    div
+      span 密码
+      input(name="password" type="password")
+    div
+      input(value="登录" type="submit")
+  form(action="logon" method="post")
+    div
+      span 用户名
+      input(name="username" type="text")
+    div
+      span 密码
+      input(name="password" type="password")
+    div
+      span 手机号
+      input(name="phone" type="text")
+    div
+      input(value="注册" type="submit")

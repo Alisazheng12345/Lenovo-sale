@@ -1,0 +1,87 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form(method="post" action="/admin/update/success")
+    div
+      span 当前商品ID
+      input(name="id" value=computer._id type="text" readonly)
+    div
+      span 名称
+      input(name="name" value=computer.name type="text")
+    div
+      span 型号
+      input(name="type" value=computer.type type="text")
+    div
+      span 简介
+      input(name="infor" value=computer.infor type="text")
+    div
+      span 所属系列
+      input(name="serie" value=computer.serie type="text")
+    div
+      span 价格
+      input(name="cost" value=computer.cost type="text")
+    div
+      span 海报地址
+      input(name="posters" value=computer.posters type="text")
+    div
+      span 图片地址
+      input(name="images" value=computer.images type="text")
+    div
+      span 首页显示
+      input(name="show" value=computer.show type="text")
+    div
+      span cpu名称
+      input(name="cpu_name" value=computer.cpu_name type="text")
+    div
+      span cpu速度
+      input(name="cpu_speed" value=computer.cpu_speed type="text")
+    div
+      span cpu型号
+      input(name="cpu_type" value=computer.cpu_type type="text")
+    div
+      span 操作系统
+      input(name="system" value=computer.system type="text")
+    div
+      span 屏幕大小
+      input(name="show_size" value=computer.show_size type="text")
+    div
+      span 屏幕型号
+      input(name="show_type" value=computer.show_type type="text")
+    div
+      span 显卡型号
+      input(name="xian_type" value=computer.xian_type type="text")
+    div
+      span 硬盘大小
+      input(name="pan_size" value=computer.pan_size type="text")
+    div
+      span 内存类型
+      input(name="ram_type" value=computer.ram_type type="text")
+    div
+      span 内存大小
+      input(name="ram_size" value=computer.ram_size type="text")
+    div
+      span 端口类型
+      input(name="port_type" value=computer.port_type type="text")
+    div
+      span 端口数量
+      input(name="port_amount" value=computer.port_amount type="text")
+    div
+      span 声卡类型
+      input(name="listen_type" value=computer.listen_type type="text")
+    div
+      span 电源类型
+      input(name="power_type" value=computer.power_type type="text")
+    div
+      span 续航时间
+      input(name="power_time" value=computer.power_time type="text")
+    div
+      span 尺寸
+      input(name="size" value=computer.size type="text")
+    div
+      span 净重
+      input(name="weight" value=computer.weight type="text")
+    div
+      input(type="submit" value="提交")
+  p #{warning}
