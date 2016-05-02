@@ -4,7 +4,16 @@ var shopScheMa = new Schema({
     username: String,
     name: String,
     type: String,
+    infor: String,
     cost: Number
 }); 
 
-exports.shop = mongoose.model('shoplists', userScheMa); 
+shopScheMa.statics = {
+	findName: function(username,cb){
+		return this
+		.find({username: username})
+		.exec(cb);
+	}
+}
+
+exports.shoplist = mongoose.model('shoplists', shopScheMa); 

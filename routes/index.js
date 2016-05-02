@@ -4,11 +4,12 @@ var mongoose = require('mongoose');
 var _ = require('underscore');
 var user = require('../schema/user').user;
 var computer = require('../schema/computer').computer;
+var shoplist = require('../schema/shoplist').shoplist;
 mongoose.connect('mongodb://localhost/computer_sale');
  
 /* GET home page. */
 router.get('/',function(req,res){
-	computer.fetch(function(err,computers){
+	computer.findShow(function(err,computers){
 		if(err){
 			console.log(err);
 		}
@@ -20,11 +21,21 @@ router.get('/',function(req,res){
 });
  
 /*login*/
-router.get('/login', function(req, res) {
+router.get('/login', function(req, res){
     res.render('login', { title: 'login' });
 });
-router.get('/logon', function(req, res) {
+router.get('/logon', function(req, res){
     res.render('login', { title: 'logon' });
+});
+router.get('/shoplist',function(req,res){
+	var username = req.session.username;
+	shoplist.findName(username,function(err,shoplists){
+		res.render('shoplist',{
+			title: '购物车',
+			username: username,
+			shoplists: shoplists
+		})
+	})
 });
 //用户登录
 router.post('/index', function(req, res) {
@@ -37,7 +48,15 @@ router.post('/index', function(req, res) {
 	    	var text = eval('('+ docs +')');
 	    	if(text.password == query_doc.password){
 	            console.log(query_doc.username + ": login success in " + new Date());
-	            res.render('homepage', { title: '登陆成功' });    		
+	            computer.fetch(function(err,computers){
+	            	req.session.username = query_doc.username;
+	            	console.log(req.session.username);
+	            	res.render('index', { 
+	            		title: '首页',
+	            		username: req.session.username,
+	            		computers: computers 
+	            	});  	            	
+	            })
 	    	}else{
 	            console.log("login failed in " + new Date());
 	            res.render('homepage', { title: '登陆失败' });    		
@@ -75,6 +94,7 @@ router.get('/computer/:id',function(req,res){
 	computer.findById(id,function(err,computer){
 		res.render('computer',{
 			title: '详情页',
+			username: req.session.username,
 			computer: computer
 		})
 	})
@@ -194,8 +214,6 @@ router.post('/admin/computer/new',function(req,res){
 		}
 	});
 })
-//修改商品
-
 //初始化后台
 router.get('/admin',function(req,res){
 	res.render('admin',{
@@ -205,5 +223,27 @@ router.get('/admin',function(req,res){
 			type: ''
 		}
 	})
+})
+//购物车
+router.post('/shoplist',function(req,res){
+	var id = req.body.id;
+	if(req.session.username != undefined){
+		computer.findOne({_id:id},function(err,doc){
+			var username = req.session.username;
+			var name = doc.name;
+			var type = doc.type;
+			var infor = doc.infor;
+			var cost = doc.cost;
+			shoplist.create({username:username, name: name, type: type, infor: infor, cost: cost},function(err,docs){
+				if(err){
+					console.log(err);
+				}else{
+					console.log("添加成功" + req.session.username);
+				}
+			})
+		})
+	}else{
+		console.log('请先登录');
+	}
 })
 module.exports = router;

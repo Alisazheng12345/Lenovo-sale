@@ -3,6 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  p(id="id") #{computer._id}
   h2 #{computer.name}
   p #{computer.type}
   p #{computer.infor}
@@ -28,3 +29,4 @@ block content
   p #{computer.power_time}
   p #{computer.size}
   p #{computer.weight}
+  a(id="shoplist") 加入购物车

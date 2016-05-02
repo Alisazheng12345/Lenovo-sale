@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p #{username}
+  each item in shoplists
+    h2 #{item.name}
+    p #{item.type}
+    p #{item.infor}
+    p #{item.cost}
