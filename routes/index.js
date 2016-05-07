@@ -13,8 +13,10 @@ router.get('/',function(req,res){
 		if(err){
 			console.log(err);
 		}
+		var username = req.session.username;
 		res.render('index',{
 			title: '首页',
+			username: username,
 			computers: computers
 		})
 	})
@@ -245,5 +247,24 @@ router.post('/shoplist',function(req,res){
 	}else{
 		console.log('请先登录');
 	}
+})
+//购物车删除
+router.post('/shoplist/removeOne',function(req,res){
+	var name = req.body.name;
+	var username = req.session.username;
+	shoplist.removeOne(username,name,function(err,doc){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("删除成功"+ username);
+			shoplist.findName(username,function(err,shoplists){
+				res.render('shoplist',{
+					title: '购物车',
+					username: username,
+					shoplists: shoplists
+				})
+			})
+		}
+	});
 })
 module.exports = router;

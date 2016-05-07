@@ -5,8 +5,8 @@ html
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title= title
-    link(rel='stylesheet',href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet',href='/stylesheets/style.css')
     script(src="/javascripts/jquery-1.12.3.min.js")
     script(src="/javascripts/bootstrap.min.js")
     script(src="/javascripts/javascript.js")
@@ -20,15 +20,15 @@ html
             span.icon-bar
             span.icon-bar
           a.navbar-brand(href="/") Lenovo 联想商城
-        .collapse.navbar-collapse(id="#bs-example-navbar-collapse-1")
+        .collapse.navbar-collapse(id="bs-example-navbar-collapse-1")
           ul.nav.navbar-nav
             li.active
               a(href="/") 首页
                 span.sr-only (current)
             li
-              a(href="#") 常规笔记本
+              a(href="#") Lenovo电脑
             li
-              a(href="#") 常规笔记本
+              a(href="#") Thinkpad电脑
             li.dropdown
               a.dropdown-toggle(href="#" id="hover" data-toggle="dropdown" role="button" aria-haspopup="true" data-hover="dropdown" aria-expanded="false") 互联网爆款
                 span.caret
@@ -43,8 +43,9 @@ html
             .form-group
               input(type="text" class="form-control" placeholder="Search")
               button(type="submit" class="btn btn-default") 搜索
-              button(type="submit" class="btn btn-default") 登录
-              button(type="submit" class="btn btn-default") 注册
+              a(href="login") 登录
+              a(href="logon") 注册
+              a(href="/shoplist") 购物车
+              span #{username}
           //- span(style="display:none") #{username}
-    p #{username}
     block content

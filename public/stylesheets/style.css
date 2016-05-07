@@ -8,3 +8,22 @@ a {
   color: #00B7FF;
   cursor: pointer;
 }
+.navbar{
+	margin-bottom: 0;
+}
+.carousel-control{
+	font-size: 400%;
+}
+.right,.left{
+	background-image: none;
+}
+.right span,.left span{
+	position: absolute;
+	top: 40%;
+}
+.featurette-image{
+	width: 236px;
+}
+.text-center{
+	margin-top: 50px;
+}

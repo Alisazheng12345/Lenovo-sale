@@ -13,6 +13,16 @@ shopScheMa.statics = {
 		return this
 		.find({username: username})
 		.exec(cb);
+	},
+	removeOne: function(username,name,cb){
+		return this
+		.remove({username: username,name: name})
+		.exec(cb);
+	},
+	removeAll: function(username,cb){
+		return this
+		.remove({username: username})
+		.exec(cb);
 	}
 }
 

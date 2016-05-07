@@ -1,12 +1,37 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a(href="login") 登录
-  a(href="logon") 注册
-  each item in computers
-    h2 #{item.name}
-    p #{item.type}
-    a(href="/computer/#{item._id}") 查看
-    a(href="/shoplist") 我的购物车
+  div.carousel.slide(id="myCarousel")
+    ol.carousel-indicators
+      li.active(data-target="#myCarousel" data-slide-to="0")
+      li(data-target="#myCarousel" data-slide-to="1")
+      li(data-target="#myCarousel" data-slide-to="2")
+    div.carousel-inner
+      div.item.active
+        img(src="/images/1.jpg" alt="First slide")
+      div.item
+        img(src="/images/2.jpg" alt="Second slide")
+      div.item
+        img(src="/images/3.jpg" alt="Third slide")
+    a.carousel-control.left(href="#myCarousel" data-slide="prev")
+      span &lsaquo;
+    a.carousel-control.right(href="#myCarousel" data-slide="next")
+      span &rsaquo;
+  .container.marketing
+    - for(var i in computers)
+        if i%2 == 0
+          .rowfeaturette
+            .col-md-6.text-center
+              h3.featurette-heading #{computers[i].name}
+              p #{computers[i].type}
+              a(href="/computer/#{computers[i]._id}") 查看
+            .col-md-6
+              img.featurette-image.img-responsive.center-block(src="#{computers[i].images}")
+        else
+          .rowfeaturette
+            .col-md-6.col-md-push-6.text-center
+              h3.featurette-heading #{computers[i].name}
+              p #{computers[i].type}
+              a(href="/computer/#{computers[i]._id}") 查看
+            .col-md-6.col-md-pull-6
+              img.featurette-image.img-responsive.center-block(src="#{computers[i].images}")

@@ -9,3 +9,6 @@ block content
     p #{item.type}
     p #{item.infor}
     p #{item.cost}
+    form(action="/shoplist/removeOne" method="post")
+      input(name="name" value="#{item.name}" type="text" readonly)
+      input(type="submit" value="删除")
