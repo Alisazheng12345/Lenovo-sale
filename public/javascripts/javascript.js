@@ -27,6 +27,12 @@ $(document).ready(function(){
             }
         });
     });
+    $("#login").click(function(){
+        $(".login").slideDown();
+    })
+    $("#cancel").click(function(){
+        $(".login").slideUp();
+    })
     $('.carousel').carousel({
         interval: 2000
     })

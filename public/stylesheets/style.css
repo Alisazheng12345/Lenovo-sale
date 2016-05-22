@@ -4,12 +4,54 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+a{
   cursor: pointer;
+  text-decoration: none;
 }
 .navbar{
 	margin-bottom: 0;
+}
+.form-group a{
+	text-decoration: none;
+	display: inline-block;
+	height: 20px;
+	width: 50px;
+	line-height: 35px;
+	color: #fff;
+}
+.form-group a:hover{
+	color: red;
+}
+.login{
+	width: 33%;
+	position: fixed;
+	left: 33%;
+	top: 30%;
+	background: #fff;
+	z-index: 999;
+	border: 5px solid #eee;
+}
+.page-header{
+	padding: 0 30px;
+	border: none;
+}
+.login{
+	display: none;
+}
+.login #cancel a{
+  position: absolute;
+  right: 30px;
+  color: #000;
+  text-decoration: none;
+}
+.login .btn{
+	width: 100%;
+	background-color: red;
+	border-color: red;
+}
+.login button:hover{
+	background-color: red;
+	border-color: red;
 }
 .carousel-control{
 	font-size: 400%;
@@ -26,4 +68,25 @@ a {
 }
 .text-center{
 	margin-top: 50px;
+}
+.footer{
+	background-color: #000;
+}
+.center{
+	margin-bottom: 30px;
+}
+.center li{
+	font-size: 12px;
+	color: #555;
+	line-height: 22px;
+}
+@media screen and (max-width: 760px) {
+    .center{
+    	display: none;
+    }
+    .login{
+    	width: 290px;
+    	left: 50%;
+    	margin-left: -145px;
+    }
 }

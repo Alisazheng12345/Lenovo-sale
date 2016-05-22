@@ -31,6 +31,12 @@ router.get('/login', function(req, res){
 router.get('/logon', function(req, res){
     res.render('login', { title: 'logon' });
 });
+//注销
+router.get('/clear',function(req,res){
+	req.session.username = '';
+	console.log(req.session.username);
+	res.redirect('/');
+})
 //详情页
 router.get('/computer/:id',function(req,res){
 	var id = req.params.id;

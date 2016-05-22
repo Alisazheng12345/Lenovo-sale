@@ -46,9 +46,25 @@ html
               if (username)
                 span #{username}
                 a(href="/shoplist") 购物车
+                a(href="/clear") 注销
               else
-                a(href="/login") 登录
-                a(href="/logon") 注册
+                a(id="login") 登录
+                a(id="logon") 注册
               //- span #{username}
           //- span(style="display:none") #{username}
+    .container.login
+      .page-header
+        h4
+          span 用户登录
+          span(id="cancel") 
+            a X
+        form.form-horizontal(action="index" method="post")
+          .form-group
+            .col-md-5
+            input(type="text" class="form-control" name="username" placeholder="用户名/email")
+          .form-group
+            .col-md-5
+            input(type="password" class="form-control" name="password" placeholder="密码")
+          .form-group
+            input.btn.btn-primary(value="登录" type="submit")
     block content
