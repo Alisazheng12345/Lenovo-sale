@@ -13,6 +13,20 @@ $(document).ready(function(){
             }
         });
     });
+    $(".delete").click(function(){
+        var name = $("#name").text();
+        var data = {"name": name};
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "/admin/computer/delete",
+            dataType:'json',
+            data: data,
+            success: function(msg){
+                console.log(msg);
+            }
+        });
+    });
     $('.carousel').carousel({
         interval: 2000
     })

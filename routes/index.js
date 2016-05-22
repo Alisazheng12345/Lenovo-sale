@@ -7,6 +7,8 @@ var computer = require('../schema/computer').computer;
 var shoplist = require('../schema/shoplist').shoplist;
 mongoose.connect('mongodb://localhost/computer_sale');
  
+
+//页面获取部分
 /* GET home page. */
 router.get('/',function(req,res){
 	computer.findShow(function(err,computers){
@@ -29,16 +31,54 @@ router.get('/login', function(req, res){
 router.get('/logon', function(req, res){
     res.render('login', { title: 'logon' });
 });
-router.get('/shoplist',function(req,res){
-	var username = req.session.username;
-	shoplist.findName(username,function(err,shoplists){
-		res.render('shoplist',{
-			title: '购物车',
-			username: username,
-			shoplists: shoplists
+//详情页
+router.get('/computer/:id',function(req,res){
+	var id = req.params.id;
+	computer.findById(id,function(err,computer){
+		res.render('computer',{
+			title: '详情页',
+			username: req.session.username,
+			computer: computer
 		})
 	})
 });
+//初始化后台
+router.get('/admin',function(req,res){
+	res.render('admin',{
+		title: '后台',
+		computer: {
+			name: '',
+			type: ''
+		}
+	})
+})
+//修改列表页
+router.get('/admin/list',function(req,res){
+	computer.fetch(function(err,computers){
+		if(err){
+			console.log(err);
+		}else{
+			res.render('list',{
+				title: '修改列表页',
+				computers: computers
+			})
+		}
+	})
+});
+//单独修改页
+router.get('/admin/update/:id',function(req,res){
+	var id = req.params.id;
+	if(id){
+		computer.findById(id,function(err,computer){
+			res.render('update',{
+				title: '修改',
+				computer: computer
+			})
+		})
+	}
+});
+
+//用户功能部分
 //用户登录
 router.post('/index', function(req, res) {
     var query_doc = {username: req.body.username, password: req.body.password};
@@ -90,41 +130,65 @@ router.post('/logon',function(req,res){
 		}
 	})
 });
-//详情页
-router.get('/computer/:id',function(req,res){
-	var id = req.params.id;
-	computer.findById(id,function(err,computer){
-		res.render('computer',{
-			title: '详情页',
-			username: req.session.username,
-			computer: computer
-		})
-	})
-});
-//修改列表页
-router.get('/admin/list',function(req,res){
-	computer.fetch(function(err,computers){
-		if(err){
-			console.log(err);
-		}
-		res.render('list',{
-			title: '修改列表页',
-			computers: computers
-		})
-	})
-});
-//单独修改页
-router.get('/admin/update/:id',function(req,res){
-	var id = req.params.id;
-	if(id){
-		computer.findById(id,function(err,computer){
-			res.render('update',{
-				title: '修改',
-				computer: computer
+//添加购物车
+router.post('/shoplist',function(req,res){
+	var id = req.body.id;
+	if(req.session.username != undefined){
+		computer.findOne({_id:id},function(err,doc){
+			var username = req.session.username;
+			var name = doc.name;
+			var type = doc.type;
+			var infor = doc.infor;
+			var cost = doc.cost;
+			shoplist.create({username:username, name: name, type: type, infor: infor, cost: cost},function(err,docs){
+				if(err){
+					console.log(err);
+				}else{
+					console.log("添加成功" + req.session.username);
+				}
 			})
 		})
+	}else{
+		console.log('请先登录');
 	}
+})
+//购物车删除
+router.post('/shoplist/removeOne',function(req,res){
+	var name = req.body.name;
+	var username = req.session.username;
+	shoplist.removeOne(username,name,function(err,doc){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("删除成功"+ username);
+			shoplist.findName(username,function(err,shoplists){
+				res.render('shoplist',{
+					title: '购物车',
+					username: username,
+					shoplists: shoplists
+				})
+			})
+		}
+	});
+})
+//购物车查看
+router.get('/shoplist',function(req,res){
+	var username = req.session.username;
+	var sum = 0;
+	shoplist.findName(username,function(err,shoplists){
+		for(var i in shoplists){
+			sum += shoplists[i].cost;
+		}
+		res.render('shoplist',{
+			title: '购物车',
+			username: username,
+			shoplists: shoplists,
+			sum: sum
+		})
+	})
 });
+
+//管理员功能部分
 //修改商品
 router.post('/admin/update/success',function(req,res){
 	var id = req.body.id;
@@ -216,55 +280,10 @@ router.post('/admin/computer/new',function(req,res){
 		}
 	});
 })
-//初始化后台
-router.get('/admin',function(req,res){
-	res.render('admin',{
-		title: '后台',
-		computer: {
-			name: '',
-			type: ''
-		}
-	})
-})
-//购物车
-router.post('/shoplist',function(req,res){
-	var id = req.body.id;
-	if(req.session.username != undefined){
-		computer.findOne({_id:id},function(err,doc){
-			var username = req.session.username;
-			var name = doc.name;
-			var type = doc.type;
-			var infor = doc.infor;
-			var cost = doc.cost;
-			shoplist.create({username:username, name: name, type: type, infor: infor, cost: cost},function(err,docs){
-				if(err){
-					console.log(err);
-				}else{
-					console.log("添加成功" + req.session.username);
-				}
-			})
-		})
-	}else{
-		console.log('请先登录');
-	}
-})
-//购物车删除
-router.post('/shoplist/removeOne',function(req,res){
+//删除商品
+router.post('/admin/computer/delete',function(req,res){
 	var name = req.body.name;
-	var username = req.session.username;
-	shoplist.removeOne(username,name,function(err,doc){
-		if(err){
-			console.log(err);
-		}else{
-			console.log("删除成功"+ username);
-			shoplist.findName(username,function(err,shoplists){
-				res.render('shoplist',{
-					title: '购物车',
-					username: username,
-					shoplists: shoplists
-				})
-			})
-		}
-	});
-})
+	console.log(name);
+	computer.remove({name:name});
+});
 module.exports = router;

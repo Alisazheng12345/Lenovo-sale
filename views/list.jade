@@ -1,4 +1,4 @@
-extends layout
+extends admin_head
 
 block content
   h1= title
@@ -6,9 +6,11 @@ block content
   table
     each item in computers
       tr
-        td #{item.name}
+        td(id="name") #{item.name}
         td #{item.type}
         td
           a(href='/admin/update/#{item._id}') 修改
         td
           a(href="/computer/#{item._id}") 查看
+        td
+          a.delete(href="/admin/list") 删除

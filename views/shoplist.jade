@@ -12,3 +12,5 @@ block content
     form(action="/shoplist/removeOne" method="post")
       input(name="name" value="#{item.name}" type="text" readonly)
       input(type="submit" value="删除")
+  p #{sum}
+  a(id="sum") 结算

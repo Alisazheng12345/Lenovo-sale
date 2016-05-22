@@ -41,11 +41,14 @@ html
                   a(href="#") 马俊睿
           form.navbar-form.navbar-right(role="search")
             .form-group
-              input(type="text" class="form-control" placeholder="Search")
-              button(type="submit" class="btn btn-default") 搜索
-              a(href="login") 登录
-              a(href="logon") 注册
-              a(href="/shoplist") 购物车
-              span #{username}
+              //- input(type="text" class="form-control" placeholder="Search")
+              //- button(type="submit" class="btn btn-default") 搜索
+              if (username)
+                span #{username}
+                a(href="/shoplist") 购物车
+              else
+                a(href="/login") 登录
+                a(href="/logon") 注册
+              //- span #{username}
           //- span(style="display:none") #{username}
     block content
