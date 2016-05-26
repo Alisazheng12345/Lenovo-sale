@@ -1,33 +1,58 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p(id="id") #{computer._id}
-  h2 #{computer.name}
-  p #{computer.type}
-  p #{computer.infor}
-  p #{computer.serie}
-  p #{computer.cost}
-  img(src="#{computer.posters}") 
-  img(src="#{computer.images}")
-  p #{computer.show}
-  p #{computer.cpu_name}
-  p #{computer.cpu_speed}
-  p #{computer.cpu_type}
-  p #{computer.system}
-  p #{computer.show_size}
-  p #{computer.show_type}
-  p #{computer.xian_type}
-  p #{computer.pan_size}
-  p #{computer.ram_type}
-  p #{computer.ram_size}
-  p #{computer.port_type}
-  p #{computer.port_amount}
-  p #{computer.listen_type}
-  p #{computer.power_type}
-  p #{computer.power_time}
-  p #{computer.size}
-  p #{computer.weight}
-  a(id="shoplist") 加入购物车
-  a(href="/shoplist") 查看购物车
+  .container
+    ol.breadcrumb
+      li
+        a(href="/") 首页
+      li
+        a(href="/#{computer.type}") #{computer.type}
+      li.active #{computer.name}
+    .row
+      .col-md-6.pic
+        img(src="#{computer.images}")
+      .col-md-6
+        h2 #{computer.name}
+        p #{computer.infor}
+        span 商城价:
+        span ¥#{computer.cost}
+        .buttons
+          button
+            a(id="shoplist") 加入购物车
+          button
+            a(id="buy") 立即购买
+    .col-md-2
+    .col-md-10
+      ul.nav.nav-tabs(id="myTab")
+        li.active
+          a(href="#posters" data-toggle="tab") 商品详情
+        li
+          a(href="#information" data-toggle="tab") 配置信息
+      .tab-content
+        .tab-pane.posters.active(id="posters")
+          img(src="#{computer.posters}")
+        .tab-pane(id="information")
+          p(id="id") #{computer._id}
+          h2 #{computer.name}
+          p #{computer.type}
+          p #{computer.infor}
+          p #{computer.serie}
+          p #{computer.cost}
+          p #{computer.show}
+          p #{computer.cpu_name}
+          p #{computer.cpu_speed}
+          p #{computer.cpu_type}
+          p #{computer.system}
+          p #{computer.show_size}
+          p #{computer.show_type}
+          p #{computer.xian_type}
+          p #{computer.pan_size}
+          p #{computer.ram_type}
+          p #{computer.ram_size}
+          p #{computer.port_type}
+          p #{computer.port_amount}
+          p #{computer.listen_type}
+          p #{computer.power_type}
+          p #{computer.power_time}
+          p #{computer.size}
+          p #{computer.weight} 

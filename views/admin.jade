@@ -9,13 +9,28 @@ block content
       input(name="name" value=computer.name type="text")
     div
       span 型号
-      input(name="type" value=computer.type type="text")
+      //- input(name="type" value=computer.type type="text")
+      select(name="type")
+        option(value="Lenovo电脑") Lenovo电脑
+        option(value="Thinkpad电脑") Thinkpad电脑
     div
       span 简介
       input(name="infor" value=computer.infor type="text")
     div
       span 所属系列
-      input(name="serie" value=computer.serie type="text")
+      //- input(name="serie" value=computer.serie type="text")
+      select(name="serie")
+        option(value="常规笔记本") 常规笔记本
+        option(value="超轻薄笔记本") 超轻薄笔记本
+        option(value="常规笔记本") 互联网爆款
+        option(value="超轻薄笔记本") 游戏本
+        option(value="常规笔记本") 变形笔记本
+        option(value="X系列") X系列
+        option(value="T系列") T系列
+        option(value="S系列") S系列
+        option(value="E系列") E系列
+        option(value="W系列") W系列
+        option(value="平板系列") 平板系列
     div
       span 价格
       input(name="cost" value=computer.cost type="text")
@@ -27,7 +42,10 @@ block content
       input(name="images" value=computer.images type="text")
     div
       span 首页显示
-      input(name="show" value=computer.show type="text")
+      //- input(name="show" value=computer.show type="text")
+      select(name="show")
+        option(value="0") 不显示
+        option(value="1") 显示
     div
       span cpu名称
       input(name="cpu_name" value=computer.cpu_name type="text")

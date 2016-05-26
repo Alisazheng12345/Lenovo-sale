@@ -6,11 +6,13 @@ block content
   table
     each item in computers
       tr
-        td(id="name") #{item.name}
+        td.name #{item.name}
         td #{item.type}
         td
           a(href='/admin/update/#{item._id}') 修改
         td
           a(href="/computer/#{item._id}") 查看
         td
-          a.delete(href="/admin/list") 删除
+          form(action="/admin/delete" method="post")
+            input(type="text" name="name" value="#{item.name}" readonly)
+            input(value="删除" type="submit")

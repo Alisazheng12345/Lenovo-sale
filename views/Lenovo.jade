@@ -1,0 +1,176 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-lg-1.col-md-0.col-xs-0
+      .col-lg-3.col-md-0.col-xs-0(id="myScrollspy")
+        ul.nav.nav-tabs.nav-stacked.side_list(data-spy="affix" data-offset-top="125")
+          li.title 商品分类
+          li.active
+            a(href="#section-1") 常规笔记本
+          li
+            a(href="#section-2") 超轻薄笔记本
+          li
+            a(href="#section-3") 互联网爆款
+          li
+            a(href="#section-4") 游戏本
+          li
+            a(href="#section-5") 变形笔记本
+      .col-lg-8.col-md-12.col-xs-12
+        div.carousel.slide(id="myCarousel")
+          ol.carousel-indicators
+            li.active(data-target="#myCarousel" data-slide-to="0")
+            li(data-target="#myCarousel" data-slide-to="1")
+            li(data-target="#myCarousel" data-slide-to="2")
+          div.carousel-inner
+            div.item.active
+              img(src="/images/lenovo/1.jpg" alt="First slide")
+            div.item
+              img(src="/images/lenovo/2.jpg" alt="Second slide")
+            div.item
+              img(src="/images/lenovo/3.jpg" alt="Third slide")
+    .row
+      .col-lg-3.col-md-0.col-xs-0
+      .col-lg-9.col-md-12.col-xs-12
+        .com_line
+          h3.col-md-12.first(id="section-1") 常规笔记本
+          - var count = 0;
+          - for(var i in computers)
+              if computers[i].serie == "常规笔记本" && count<4
+                - count++;
+                .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+        .clear
+        .com_line
+          h3.col-md-12.second(id="section-2") 超轻薄笔记本
+          - var count = 0;
+          - for(var i in computers)
+              if computers[i].serie == "超轻薄笔记本" && count<4
+                - count++;
+                .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+        .clear
+        .com_line
+          h3.col-md-12.third(id="section-3") 互联网爆款
+          - var count = 0;
+          - for(var i in computers)
+              if computers[i].serie == "互联网爆款" && count<4
+                - count++;
+                .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+        .clear
+        .com_line
+          h3.col-md-12.forth(id="section-4") 游戏本
+          - var count = 0;
+          - for(var i in computers)
+              if computers[i].serie == "游戏本" && count<4
+                - count++;
+                .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+        .clear
+        .com_line
+          h3.col-md-12.fifth(id="section-5") 变形笔记本
+          - var count = 0;
+          - for(var i in computers)
+              if computers[i].serie == "变形笔记本" && count<4
+                - count++;
+                .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+        .clear
+  footer.footer
+  hr
+  .container
+    .row.footer-top
+      .col-sm-12.col-lg-12-col-lg-offset-1
+        .row.about
+          .col-xs-2.center
+            h4 购物指南
+            ul.list-unstyled
+              li 
+                a 服务商信息
+              li 
+                a 购买流程
+              li 
+                a 注册登录
+          .col-xs-2.center
+            h4 配送方式
+            ul.list-unstyled
+              li 
+                a 配送方式
+              li 
+                a 配送方式信息
+              li 
+                a 物流信息
+              li 
+                a 签收原则
+          .col-xs-2.center
+            h4 支付方式
+            ul.list-unstyled
+              li 
+                a 支付方式
+              li 
+                a 支付问题
+              li 
+                a 分期支付
+          .col-xs-2.center
+            h4 订单信息
+            ul.list-unstyled
+              li 
+                a 订单信息
+              li 
+                a 其他方式订单信息
+              li 
+                a 收集方式订单信息
+          .col-xs-2.center
+            h4 售后服务
+            ul.list-unstyled
+              li 
+                a Lenovo频道商品售后
+              li 
+                a 手机频道商品售后7天
+              li 
+                a 无理由退换货说明
+              li 
+                a 24小时在线客服
+          .col-xs-2.center
+            h4 其他说明
+            ul.list-unstyled
+              li 
+                a 服务承诺
+              li 
+                a 账户安全
+              li 
+                a 产品安全
+              li 
+                a 银行分期

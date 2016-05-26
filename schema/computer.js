@@ -2,7 +2,7 @@ var mongoose = require("mongoose");  //  顶会议用户组件
 var Schema = mongoose.Schema;    //  创建模型
 var compScheMa = new Schema({
 	name: String,//名称
-	type: String,//型号
+	type: String,//类型
 	infor: String,//简介
 	serie: String,//系列
 	cost: Number,//价格
@@ -58,10 +58,21 @@ compScheMa.statics = {
 		.findOne({_id:id})
 		.exec(cb);
 	},
+	findByType: function(type,cb){
+		return this
+		.find({type: type})
+		.sort('meta.updateAt')
+		.exec(cb);
+	},
 	findShow: function(cb){
 		return this
 		.find({show: 1})
 		.sort('meta.updateAt')
+		.exec(cb);
+	},
+	removeOne: function(name,cb){
+		return this
+		.remove({name: name})
 		.exec(cb);
 	}
 }

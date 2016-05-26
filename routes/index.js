@@ -48,6 +48,26 @@ router.get('/computer/:id',function(req,res){
 		})
 	})
 });
+//Lenovo列表页
+router.get('/Lenovo',function(req,res){
+	computer.findByType("Lenovo",function(err,computers){
+		res.render('Lenovo',{
+			title: "Lenovo电脑",
+			username: req.session.username,
+			computers: computers
+		})
+	})
+})
+//Thinkpad列表页
+router.get('/Thinkpad',function(req,res){
+	computer.findByType("Thinkpad",function(err,computers){
+		res.render('Thinkpad',{
+			title: "Thinkpad电脑",
+			username: req.session.username,
+			computers: computers
+		})
+	})
+})
 //初始化后台
 router.get('/admin',function(req,res){
 	res.render('admin',{
@@ -96,7 +116,7 @@ router.post('/index', function(req, res) {
 	    	var text = eval('('+ docs +')');
 	    	if(text.password == query_doc.password){
 	            console.log(query_doc.username + ": login success in " + new Date());
-	            computer.fetch(function(err,computers){
+	            computer.findShow(function(err,computers){
 	            	req.session.username = query_doc.username;
 	            	console.log(req.session.username);
 	            	res.render('index', { 
@@ -287,9 +307,21 @@ router.post('/admin/computer/new',function(req,res){
 	});
 })
 //删除商品
-router.post('/admin/computer/delete',function(req,res){
+router.post('/admin/delete',function(req,res){
 	var name = req.body.name;
 	console.log(name);
-	computer.remove({name:name});
+	computer.removeOne(name,function(err,doc){
+		computer.fetch(function(err,computers){
+			if(err){
+				console.log(err);
+			}else{
+				res.render('list',{
+					title: '修改列表页',
+					computers: computers
+				})
+			}
+		})		
+	});
+    console.log(name);
 });
 module.exports = router;

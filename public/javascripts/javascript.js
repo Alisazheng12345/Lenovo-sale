@@ -13,25 +13,19 @@ $(document).ready(function(){
             }
         });
     });
-    $(".delete").click(function(){
-        var name = $("#name").text();
-        var data = {"name": name};
-        console.log(data);
-        $.ajax({
-            type: "POST",
-            url: "/admin/computer/delete",
-            dataType:'json',
-            data: data,
-            success: function(msg){
-                console.log(msg);
-            }
-        });
-    });
     $("#login").click(function(){
         $(".login").slideDown();
     })
-    $("#cancel").click(function(){
+    $("#logon").click(function(){
+        $(".logon").slideDown();
+    })
+    $("#logon_now").click(function(){
+        $(".logon").slideDown();
         $(".login").slideUp();
+    })
+    $(".cancel").click(function(){
+        $(".login").slideUp();
+        $(".logon").slideUp();
     })
     $('.carousel').carousel({
         interval: 2000
