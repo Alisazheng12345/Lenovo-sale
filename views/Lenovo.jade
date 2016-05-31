@@ -35,6 +35,7 @@ block content
       .col-lg-9.col-md-12.col-xs-12
         .com_line
           h3.col-md-12.first(id="section-1") 常规笔记本
+            span.common_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "常规笔记本" && count<4
@@ -47,9 +48,20 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "常规笔记本"
+                - count++;
+                .col-sm-3.col-xs-12.item.common_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.second(id="section-2") 超轻薄笔记本
+            span.light_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "超轻薄笔记本" && count<4
@@ -62,9 +74,20 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "超轻薄笔记本"
+                - count++;
+                .col-sm-3.col-xs-12.item.light_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.third(id="section-3") 互联网爆款
+            span.hot_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "互联网爆款" && count<4
@@ -77,9 +100,20 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "互联网爆款"
+                - count++;
+                .col-sm-3.col-xs-12.item.hot_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.forth(id="section-4") 游戏本
+            span.game_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "游戏本" && count<4
@@ -92,14 +126,35 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "游戏本"
+                - count++;
+                .col-sm-3.col-xs-12.item.game_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.fifth(id="section-5") 变形笔记本
+            span.change_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "变形笔记本" && count<4
                 - count++;
                 .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "变形笔记本"
+                - count++;
+                .col-sm-3.col-xs-12.item.change_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
                       img(src="/images/imgs/#{computers[i].name}.jpg")

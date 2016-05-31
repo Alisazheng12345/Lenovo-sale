@@ -1,18 +1,30 @@
 extends admin_head
 
 block content
-  h1= title
-  p Welcome to #{title}
-  table
-    each item in computers
+  .container
+    h1= title
+    table.table
       tr
-        td.name #{item.name}
-        td #{item.type}
+        td 名称
+        td 类型
+        td 信息
+        td 所属系列
+        td 价格
+        td 操作
         td
-          a(href='/admin/update/#{item._id}') 修改
         td
-          a(href="/computer/#{item._id}") 查看
-        td
-          form(action="/admin/delete" method="post")
-            input(type="text" name="name" value="#{item.name}" readonly)
-            input(value="删除" type="submit")
+      each item in computers
+        tr
+          td.name #{item.name}
+          td #{item.type}
+          td #{item.infor}
+          td #{item.serie}
+          td #{item.cost}
+          td
+            a.btn.btn-default(href='/admin/update/#{item._id}') 修改
+          td
+            a.btn.btn-default(href="/computer/#{item._id}") 查看
+          td
+            form(action="/admin/delete" method="post")
+              input.hide(type="text" name="name" value="#{item.name}" readonly)
+              input.btn.btn-default(value="删除" type="submit")

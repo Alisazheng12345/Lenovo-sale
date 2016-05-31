@@ -2,86 +2,97 @@ extends admin_head
 
 block content
   h1= title
-  p Welcome to #{title}
-  form(method="post" action="/admin/update/success")
-    div
+  form.admin(method="post" action="/admin/update/success")
+    div.form-group
       span 当前商品ID
-      input(name="id" value=computer._id type="text" readonly)
-    div
+      input(name="id" class="form-control" value=computer._id type="text" readonly)
+    div.form-group
       span 名称
-      input(name="name" value=computer.name type="text")
-    div
-      span 型号
-      input(name="type" value=computer.type type="text")
-    div
+      input(name="name" class="form-control" value=computer.name type="text")
+    div.form-group
+      label 型号
+      //- input(name="type" value=computer.type type="text")
+      select(name="type" value=computer.type class="form-control input-sm")
+        option(value="Lenovo") Lenovo
+        option(value="Thinkpad") Thinkpad
+    div.form-group
       span 简介
-      input(name="infor" value=computer.infor type="text")
-    div
-      span 所属系列
-      input(name="serie" value=computer.serie type="text")
-    div
+      input(name="infor" class="form-control" value=computer.infor type="text")
+    div.form-group
+      label 所属系列
+      //- input(name="serie" value=computer.serie type="text")
+      select(name="serie" value=computer.serie class="form-control input-sm")
+        option(value="常规笔记本") 常规笔记本
+        option(value="超轻薄笔记本") 超轻薄笔记本
+        option(value="常规笔记本") 互联网爆款
+        option(value="超轻薄笔记本") 游戏本
+        option(value="常规笔记本") 变形笔记本
+        option(value="X系列") X系列
+        option(value="T系列") T系列
+        option(value="S系列") S系列
+        option(value="E系列") E系列
+        option(value="W系列") W系列
+        option(value="平板系列") 平板系列
+    div.form-group
       span 价格
-      input(name="cost" value=computer.cost type="text")
-    div
+      input(name="cost" class="form-control" value=computer.cost type="text")
+    div.form-group
       span 海报地址
-      input(name="posters" value=computer.posters type="text")
-    div
+      input(name="posters" class="form-control" value=computer.posters type="text")
+    div.form-group
       span 图片地址
-      input(name="images" value=computer.images type="text")
-    div
+      input(name="images" class="form-control" value=computer.images type="text")
+    div.form-group
       span 首页显示
-      input(name="show" value=computer.show type="text")
-    div
+      input(name="show" class="form-control" value=computer.show type="text")
+    div.form-group
       span cpu名称
-      input(name="cpu_name" value=computer.cpu_name type="text")
-    div
+      input(name="cpu_name" class="form-control" value=computer.cpu_name type="text")
+    div.form-group
       span cpu速度
-      input(name="cpu_speed" value=computer.cpu_speed type="text")
-    div
+      input(name="cpu_speed" class="form-control" value=computer.cpu_speed type="text")
+    div.form-group
       span cpu型号
-      input(name="cpu_type" value=computer.cpu_type type="text")
-    div
+      input(name="cpu_type" class="form-control" value=computer.cpu_type type="text")
+    div.form-group
       span 操作系统
-      input(name="system" value=computer.system type="text")
-    div
+      input(name="system" class="form-control" value=computer.system type="text")
+    div.form-group
       span 屏幕大小
-      input(name="show_size" value=computer.show_size type="text")
-    div
+      input(name="show_size" class="form-control" value=computer.show_size type="text")
+    div.form-group
       span 屏幕型号
-      input(name="show_type" value=computer.show_type type="text")
-    div
+      input(name="show_type" class="form-control" value=computer.show_type type="text")
+    div.form-group
       span 显卡型号
-      input(name="xian_type" value=computer.xian_type type="text")
-    div
+      input(name="xian_type" class="form-control" value=computer.xian_type type="text")
+    div.form-group
       span 硬盘大小
-      input(name="pan_size" value=computer.pan_size type="text")
-    div
+      input(name="pan_size" class="form-control" value=computer.pan_size type="text")
+    div.form-group
       span 内存类型
-      input(name="ram_type" value=computer.ram_type type="text")
-    div
+      input(name="ram_type" class="form-control" value=computer.ram_type type="text")
+    div.form-group
       span 内存大小
-      input(name="ram_size" value=computer.ram_size type="text")
-    div
+      input(name="ram_size" class="form-control" value=computer.ram_size type="text")
+    div.form-group
       span 端口类型
-      input(name="port_type" value=computer.port_type type="text")
-    div
+      input(name="port_type" class="form-control" value=computer.port_type type="text")
+    div.form-group
       span 端口数量
-      input(name="port_amount" value=computer.port_amount type="text")
-    div
-      span 声卡类型
-      input(name="listen_type" value=computer.listen_type type="text")
-    div
+      input(name="port_amount" class="form-control" value=computer.port_amount type="text")
+    div.form-group
       span 电源类型
-      input(name="power_type" value=computer.power_type type="text")
-    div
+      input(name="power_type" class="form-control" value=computer.power_type type="text")
+    div.form-group
       span 续航时间
-      input(name="power_time" value=computer.power_time type="text")
-    div
+      input(name="power_time" class="form-control" value=computer.power_time type="text")
+    div.form-group
       span 尺寸
-      input(name="size" value=computer.size type="text")
-    div
+      input(name="size" class="form-control" value=computer.size type="text")
+    div.form-group
       span 净重
-      input(name="weight" value=computer.weight type="text")
-    div
-      input(type="submit" value="提交")
+      input(name="weight" class="form-control" value=computer.weight type="text")
+    div.form-group
+      input(type="submit" value="提交" class="btn btn-default")
   p #{warning}

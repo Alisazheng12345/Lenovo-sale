@@ -1,16 +1,99 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p #{username}
-  each item in shoplists
-    h2 #{item.name}
-    p #{item.type}
-    p #{item.infor}
-    p #{item.cost}
-    form(action="/shoplist/removeOne" method="post")
-      input(name="name" value="#{item.name}" type="text" readonly)
-      input(type="submit" value="删除")
-  p #{sum}
-  a(id="sum") 结算
+  .container.shoplist
+    .img_shoplist
+      img(src="/images/shoplist.jpg")
+    table.table
+      tr.titles
+        td.img 图片
+        td 商品
+        td.type 型号
+        td.infor 商品信息
+        td 价格
+        td 操作
+      each item in shoplists
+        tr
+          td.img
+            .img_container
+              img(src="../images/imgs/#{item.name}.jpg")
+          td #{item.name}
+          td.type #{item.type}
+          td.infor #{item.infor}
+          td #{item.cost}
+          td
+            form(action="/shoplist/removeOne" method="post")
+              input.hide(name="name" value="#{item.name}" type="text" readonly)
+              input.button_delete(type="submit" value="删除")
+    hr
+    - var sums = 0;
+    - for(var i in shoplists)
+        - sums += shoplists[i].cost
+      p.sum 总价:  ¥#{sums}元
+    a.sum_button(id="sum") 结算
+  footer.footer
+  hr
+  .container
+    .row.footer-top
+      .col-sm-12.col-lg-12-col-lg-offset-1
+        .row.about
+          .col-xs-2.center
+            h4 购物指南
+            ul.list-unstyled
+              li 
+                a 服务商信息
+              li 
+                a 购买流程
+              li 
+                a 注册登录
+          .col-xs-2.center
+            h4 配送方式
+            ul.list-unstyled
+              li 
+                a 配送方式
+              li 
+                a 配送方式信息
+              li 
+                a 物流信息
+              li 
+                a 签收原则
+          .col-xs-2.center
+            h4 支付方式
+            ul.list-unstyled
+              li 
+                a 支付方式
+              li 
+                a 支付问题
+              li 
+                a 分期支付
+          .col-xs-2.center
+            h4 订单信息
+            ul.list-unstyled
+              li 
+                a 订单信息
+              li 
+                a 其他方式订单信息
+              li 
+                a 收集方式订单信息
+          .col-xs-2.center
+            h4 售后服务
+            ul.list-unstyled
+              li 
+                a Lenovo频道商品售后
+              li 
+                a 手机频道商品售后7天
+              li 
+                a 无理由退换货说明
+              li 
+                a 24小时在线客服
+          .col-xs-2.center
+            h4 其他说明
+            ul.list-unstyled
+              li 
+                a 服务承诺
+              li 
+                a 账户安全
+              li 
+                a 产品安全
+              li 
+                a 银行分期

@@ -11,18 +11,27 @@ block content
     .row
       .col-md-6.pic
         img(src="#{computer.images}")
-      .col-md-6
+      .col-md-6.information
         h2 #{computer.name}
         p #{computer.infor}
-        span 商城价:
-        span ¥#{computer.cost}
+        .price
+          span 商城价:
+          span.cost ¥#{computer.cost}
         .buttons
-          button
-            a(id="shoplist") 加入购物车
-          button
-            a(id="buy") 立即购买
-    .col-md-2
-    .col-md-10
+          a.button(id="buy") 立即购买
+          a.button(id="shoplist") 加入购物车
+    .col-lg-2.left_computer
+      .hot 热门推荐
+      -for(var i in computers)
+        if(i<3)
+          .img_container
+            a(href="/computer/#{computers[i]._id}")
+              img(src="/images/imgs/#{computers[i].name}.jpg")
+            h5
+              a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+            p.cost ¥#{computers[i].cost}
+    .col-lg-1
+    .col-lg-9.right_infor
       ul.nav.nav-tabs(id="myTab")
         li.active
           a(href="#posters" data-toggle="tab") 商品详情
@@ -32,27 +41,148 @@ block content
         .tab-pane.posters.active(id="posters")
           img(src="#{computer.posters}")
         .tab-pane(id="information")
-          p(id="id") #{computer._id}
-          h2 #{computer.name}
-          p #{computer.type}
-          p #{computer.infor}
-          p #{computer.serie}
-          p #{computer.cost}
-          p #{computer.show}
-          p #{computer.cpu_name}
-          p #{computer.cpu_speed}
-          p #{computer.cpu_type}
-          p #{computer.system}
-          p #{computer.show_size}
-          p #{computer.show_type}
-          p #{computer.xian_type}
-          p #{computer.pan_size}
-          p #{computer.ram_type}
-          p #{computer.ram_size}
-          p #{computer.port_type}
-          p #{computer.port_amount}
-          p #{computer.listen_type}
-          p #{computer.power_type}
-          p #{computer.power_time}
-          p #{computer.size}
-          p #{computer.weight} 
+          span 商品编号:
+          span(id="id") #{computer._id}
+          hr
+          table.table.table-condensed
+            tr
+              th 处理器
+              td
+            tr
+              th cpu名称
+              td #{computer.cpu_name}
+            tr
+              th cpu速度
+              td #{computer.cpu_speed}
+            tr
+              th cpu型号
+              td #{computer.cpu_type}
+            tr
+              th 操作系统
+              td
+            tr
+              th 操作系统
+              td #{computer.system}
+            tr
+              th 显示器
+              td
+            tr
+              th 屏幕尺寸
+              td #{computer.show_size}
+            tr
+              th 屏幕类型
+              td #{computer.show_type}
+            tr
+              th 显卡
+              td
+            tr
+              th 类型
+              td #{computer.xian_type}
+            tr
+              th 硬盘
+              td
+            tr
+              th 硬盘容量
+              td #{computer.pan_size}
+            tr
+              th 内存
+              td
+            tr
+              th 内存类型
+              td #{computer.ram_type}
+            tr
+              th 内存大小
+              td #{computer.ram_size}
+            tr
+              th 端口
+              td
+            tr
+              th 端口类型
+              td #{computer.port_type}
+            tr
+              th 端口个数
+              td #{computer.port_amount}
+            tr
+              th 电源
+              td
+            tr
+              th 电池
+              td #{computer.power_type}
+            tr
+              th 续航时间
+              td #{computer.power_time}
+            tr
+              th 机器规格
+              td
+            tr
+              th 尺寸
+              td #{computer.size}
+            tr
+              th 净重
+              td #{computer.weight} 
+  footer.footer
+  hr
+  .container
+    .row.footer-top
+      .col-sm-12.col-lg-12-col-lg-offset-1
+        .row.about
+          .col-xs-2.center
+            h4 购物指南
+            ul.list-unstyled
+              li 
+                a 服务商信息
+              li 
+                a 购买流程
+              li 
+                a 注册登录
+          .col-xs-2.center
+            h4 配送方式
+            ul.list-unstyled
+              li 
+                a 配送方式
+              li 
+                a 配送方式信息
+              li 
+                a 物流信息
+              li 
+                a 签收原则
+          .col-xs-2.center
+            h4 支付方式
+            ul.list-unstyled
+              li 
+                a 支付方式
+              li 
+                a 支付问题
+              li 
+                a 分期支付
+          .col-xs-2.center
+            h4 订单信息
+            ul.list-unstyled
+              li 
+                a 订单信息
+              li 
+                a 其他方式订单信息
+              li 
+                a 收集方式订单信息
+          .col-xs-2.center
+            h4 售后服务
+            ul.list-unstyled
+              li 
+                a Lenovo频道商品售后
+              li 
+                a 手机频道商品售后7天
+              li 
+                a 无理由退换货说明
+              li 
+                a 24小时在线客服
+          .col-xs-2.center
+            h4 其他说明
+            ul.list-unstyled
+              li 
+                a 服务承诺
+              li 
+                a 账户安全
+              li 
+                a 产品安全
+              li 
+                a 银行分期

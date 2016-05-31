@@ -2,11 +2,39 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var _ = require('underscore');
+var random = require('crypto');
 var user = require('../schema/user').user;
 var computer = require('../schema/computer').computer;
 var shoplist = require('../schema/shoplist').shoplist;
 mongoose.connect('mongodb://localhost/computer_sale');
- 
+// nodemailer
+var nodemailer = require("nodemailer");
+
+var smtpTransport = nodemailer.createTransport({
+      service: "QQ"
+    , auth: {
+        user: "314339793@qq.com",
+        pass: "epzgcbmharkpbieb"
+    }
+  });
+
+// // 设置邮件内容
+// var mailOptions = {
+//   from: "Fred Foo <314339793@qq.com>", // 发件地址
+//   to: "15092220675@163.com", // 收件列表
+//   subject: "Hello world", // 标题
+//   html: "<b>thanks a for visiting!</b> 世界，你好！" // html 内容
+// }
+
+// // 发送邮件
+// smtpTransport.sendMail(mailOptions, function(error, response){
+//   if(error){
+//     console.log(error);
+//   }else{
+//     console.log("Message sent: " + response.message);
+//   }
+//   smtpTransport.close(); // 如果没用，关闭连接池
+// });
 
 //页面获取部分
 /* GET home page. */
@@ -40,17 +68,20 @@ router.get('/clear',function(req,res){
 //详情页
 router.get('/computer/:id',function(req,res){
 	var id = req.params.id;
-	computer.findById(id,function(err,computer){
-		res.render('computer',{
-			title: '详情页',
-			username: req.session.username,
-			computer: computer
+	computer.findById(id,function(err,computer_one){
+		computer.findShow(function(errs,computers){
+			res.render('computer',{
+				title: '详情页',
+				username: req.session.username,
+				computer: computer_one,
+				computers: computers
+			})			
 		})
 	})
 });
 //Lenovo列表页
 router.get('/Lenovo',function(req,res){
-	computer.findByType("Lenovo",function(err,computers){
+	computer.fetch(function(err,computers){
 		res.render('Lenovo',{
 			title: "Lenovo电脑",
 			username: req.session.username,
@@ -60,7 +91,7 @@ router.get('/Lenovo',function(req,res){
 })
 //Thinkpad列表页
 router.get('/Thinkpad',function(req,res){
-	computer.findByType("Thinkpad",function(err,computers){
+	computer.fetch(function(err,computers){
 		res.render('Thinkpad',{
 			title: "Thinkpad电脑",
 			username: req.session.username,
@@ -106,12 +137,12 @@ router.get('/admin/update/:id',function(req,res){
 
 //用户功能部分
 //用户登录
-router.post('/index', function(req, res) {
+router.post('/login', function(req, res) {
     var query_doc = {username: req.body.username, password: req.body.password};
     user.find({username:query_doc.username},function(err,docs){
     	if(docs == ""){
             console.log("login failed in " + new Date());
-            res.render('homepage', { title: '用户名不存在' });   	
+            res.render('warning', { title: '用户名不存在，请重新登录' });   	
     	}else{
 	    	var text = eval('('+ docs +')');
 	    	if(text.password == query_doc.password){
@@ -127,7 +158,7 @@ router.post('/index', function(req, res) {
 	            })
 	    	}else{
 	            console.log("login failed in " + new Date());
-	            res.render('homepage', { title: '登陆失败' });    		
+	            res.render('warning', { title: '密码错误' });    		
 	    	}	    		
     	}
     });
@@ -138,24 +169,95 @@ router.post('/logon',function(req,res){
 	user.find().select('_id').exec(function(err,stus){
         count = stus.length;
 	});
-	var query_doc = {username: req.body.username, password: req.body.password, phone: req.body.phone};
+	var query_doc = {username: req.body.username, password: req.body.password, email: req.body.email};
 	user.findOne({username:query_doc.username},function(err,docs){
 		if(err){
-	        res.render('logon', { title: '网络异常1' });  		
+	        res.render('warning', { title: '网络异常1' });  		
 		}else if(docs){
-	        res.render('logon', { title: '用户名已存在' });  
+	        res.render('warning', { title: '用户名已存在,请返回重新注册' });  
 		}else{
-			user.create({_id: count, username: query_doc.username, password: query_doc.password, phone: query_doc.phone},function(err,docs){
+			user.create({_id: count, username: query_doc.username, password: query_doc.password, email: query_doc.email},function(err,docs){
 				if(err){
-		        	res.render('logon', { title: '网络异常2' });  
+		        	res.render('warning', { title: '创建失败' }); 
 		        	console.log(err);
 				}else{
-					res.render('logon', { title: '创建成功，请返回登录' }); 
+					// res.render('index', { title: '创建成功，请返回登录' });
+					res.render('warning', { title: '登陆成功请去邮箱验证并返回登录' });
+					// 设置邮件内容
+					var mailOptions = {
+					  from: "联想笔记本官网<314339793@qq.com>", // 发件地址
+					  to: query_doc.email, // 收件列表
+					  subject: "联想笔记本销售网站注册验证", // 标题
+					  html: query_doc.username + "恭喜你注册成功，请返回登陆" // html 内容
+					}
+					// 发送邮件
+					smtpTransport.sendMail(mailOptions, function(error, response){
+					  if(error){
+					    console.log(error);
+					  }else{
+					    console.log("Message sent: " + response.message);
+					  }
+					  smtpTransport.close(); // 如果没用，关闭连接池
+					}); 
 				}
 			});
 		}
 	})
 });
+var code;
+//修改密码
+router.post('/change',function(req,res){
+	var name = req.body.username;
+	var password = req.body.password;
+	var checkcode = req.body.code;
+	if(checkcode == code){
+		user.find({username:name},function(err,doc){
+			if(err){
+				res.render('warning',{title:'用户名不存在'});
+			}else{
+				user.update({username:name,password:password},function(err,docs){
+					if(err){
+						console.log(err);
+					}else{
+						res.render('warning',{title:"修改成功，请返回登陆"});
+					}
+				})				
+			}
+		})
+	}else{
+		res.render('warning',{title:"验证码错误"})
+	}
+})
+//发送验证码
+router.post('/sendcode',function(req,res){
+	var name = req.body.name;
+	user.find({username:name},function(err,user){
+		if(user == ""){
+			res.render('warning',{title:"用户名不存在"});
+		}else{
+			console.log(name);
+			random.randomBytes(4, function(ex, buf) {  
+		    	code = buf.toString('hex');  
+		    	// 设置邮件内容
+				var mailOptions = {
+					from: "联想笔记本官网<314339793@qq.com>", // 发件地址
+					to: user[0].email, // 收件列表
+					subject: "联想笔记本销售网站修改密码验证", // 标题
+					html: "您的验证码是" + code // html 内容
+				}
+				// 发送邮件
+				smtpTransport.sendMail(mailOptions, function(error, response){
+					if(error){
+						console.log(error);
+					}else{
+						console.log("Message sent: success" );
+					}
+						smtpTransport.close(); // 如果没用，关闭连接池
+				});   
+		    });  			
+		}
+	})
+})
 //添加购物车
 router.post('/shoplist',function(req,res){
 	var id = req.body.id;
@@ -191,7 +293,7 @@ router.post('/shoplist/removeOne',function(req,res){
 				res.render('shoplist',{
 					title: '购物车',
 					username: username,
-					shoplists: shoplists
+					shoplists: shoplists,
 				})
 			})
 		}
@@ -200,17 +302,15 @@ router.post('/shoplist/removeOne',function(req,res){
 //购物车查看
 router.get('/shoplist',function(req,res){
 	var username = req.session.username;
-	var sum = 0;
-	shoplist.findName(username,function(err,shoplists){
-		for(var i in shoplists){
-			sum += shoplists[i].cost;
-		}
-		res.render('shoplist',{
-			title: '购物车',
-			username: username,
-			shoplists: shoplists,
-			sum: sum
-		})
+	computer.findShow(function(errs,computers){
+		shoplist.findName(username,function(err,shoplists){
+			res.render('shoplist',{
+				title: '购物车',
+				username: username,
+				shoplists: shoplists,
+				computers: computers
+			})
+		})		
 	})
 });
 

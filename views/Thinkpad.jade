@@ -33,6 +33,7 @@ block content
       .col-lg-9.col-md-12.col-xs-12
         .com_line
           h3.col-md-12.first(id="section-1") X系列
+            span.x_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "X系列" && count<4
@@ -45,9 +46,20 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "X系列"
+                - count++;
+                .col-sm-3.col-xs-12.item.x_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.second(id="section-2") T系列
+            span.t_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "T系列" && count<4
@@ -60,9 +72,20 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "T系列"
+                - count++;
+                .col-sm-3.col-xs-12.item.t_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.third(id="section-3") S系列
+            span.s_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "S系列" && count<4
@@ -75,14 +98,35 @@ block content
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
                     p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "S系列"
+                - count++;
+                .col-sm-3.col-xs-12.item.s_hide
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
         .clear
         .com_line
           h3.col-md-12.forth(id="section-4") 平板系列
+            span.p_spread 查看更多
           - var count = 0;
           - for(var i in computers)
               if computers[i].serie == "平板系列" && count<4
                 - count++;
                 .col-sm-3.col-xs-12.item
+                  .img_container
+                    a(href="/computer/#{computers[i]._id}")
+                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                    h4
+                      a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+                    p.detail #{computers[i].infor}
+                    p.cost ¥#{computers[i].cost}
+              else if count>=4 && computers[i].serie == "平板系列"
+                - count++;
+                .col-sm-3.col-xs-12.item.p_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
                       img(src="/images/imgs/#{computers[i].name}.jpg")
