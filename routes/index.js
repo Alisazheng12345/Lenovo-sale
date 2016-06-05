@@ -215,7 +215,7 @@ router.post('/change',function(req,res){
 			if(err){
 				res.render('warning',{title:'用户名不存在'});
 			}else{
-				user.update({username:name,password:password},function(err,docs){
+				user.update({username:name},{{$set:password:password}},function(err,docs){
 					if(err){
 						console.log(err);
 					}else{
@@ -293,7 +293,7 @@ router.post('/shoplist/removeOne',function(req,res){
 				res.render('shoplist',{
 					title: '购物车',
 					username: username,
-					shoplists: shoplists,
+					shoplists: shoplists
 				})
 			})
 		}
@@ -313,6 +313,29 @@ router.get('/shoplist',function(req,res){
 		})		
 	})
 });
+//购物车结算
+router.post('/account',function(req,res){
+	var username = req.session.username;
+	shoplist.removeAll(username,function(err,doc){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("结算成功" + username);
+			// shoplist.findName(username,function(err,shoplists){
+			// 	console.log(shoplists);
+			// 	res.render('shoplist',{
+			// 		title: '购物车',
+			// 		username: username,
+			// 		shoplists: shoplists
+			// 	})
+			// });
+			var msg = {
+				success: "结算成功"
+			};
+			res.send(msg);
+		}
+	});
+})
 
 //管理员功能部分
 //修改商品

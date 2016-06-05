@@ -8,18 +8,26 @@ window.onload = function(){
     var emailValue = document.getElementById("email");
     var emailInfor = document.getElementById("emailRemind");
     var submit = document.getElementById("submit");
+    var changeName = document.getElementById("change_name");
+    var changePassword = document.getElementById("change_password");
+    var changeSure = document.getElementById("change_sure");
+    var cName = document.getElementById("c_name");
+    var cPassword = document.getElementById("c_password");
+    var cSure = document.getElementById("c_sure");
+    var cSubmit = document.getElementById("change_submit");
     var lengthTest = /^.{4,16}$/;
     var chineseReg = /[\u4E00-\uFA29]|[\uE7C7-\uE7F3]/g;
     var trimReg = /^\s+|\s$/g;
     var emailReg = /^\w+(\.\w+)*@\w+(\.\w+)+$/i;
     var phoneReg = /^1(3|4|5|7|8)\d{9}$/;
     var flag = [0,0,0,0];
+    var change_flag = [0,0,0];
     var shoplist = document.getElementById("shoplist");
     var buy = document.getElementById("buy");
     var infors = {
         name:{
             "remind":"必填，长度为4~16位字符",
-            "null":"姓名不能为空",
+            "null":"用户名不能为空",
             "error":"格式不符，请重新输入",
             "right":"姓名可用"
         },
@@ -72,6 +80,36 @@ window.onload = function(){
             flag[0] = 1;
         }
     });
+    //修改密码的用户名
+    addEvent(changeName,"focus",function(){
+        var param = infors.name;
+        cName.innerHTML = param.remind;
+        cName.parentNode.className = "form-group";
+    });
+    addEvent(changeName,"blur",function(){
+        change_flag[0] = 0;
+        var param = infors.name;
+        var nameStr = changeName.value.replace(trimReg,'').replace(chineseReg,'--');
+        if(nameStr == ""){
+            cName.innerHTML = param.null;
+            // nameValue.parentNode.className = "error";
+            var classVal = changeName.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changeName.parentNode.setAttribute("class",classVal );
+        }else if(!lengthTest.test(nameStr)){
+            cName.innerHTML = param.error;
+            // nameValue.parentNode.className = "error";
+            var classVal = changeName.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changeName.parentNode.setAttribute("class",classVal );
+        }else{
+            cName.innerHTML = param.right;
+            var classVal = changeName.parentNode.getAttribute("class");
+            classVal = classVal.concat(" correct");
+            changeName.parentNode.setAttribute("class",classVal );
+            change_flag[0] = 1;
+        }
+    });
     addEvent(passwordValue,"focus",function(){
         var param = infors.password;
         passwordInfor.innerHTML = param.remind;
@@ -97,6 +135,34 @@ window.onload = function(){
             classVal = classVal.concat(" correct");
             passwordValue.parentNode.setAttribute("class",classVal );
             flag[1] = 1;
+        }
+    });
+    //修改密码的密码
+    addEvent(changePassword,"focus",function(){
+        var param = infors.password;
+        cPassword.innerHTML = param.remind;
+        changePassword.parentNode.className = "form-group";
+    });
+    addEvent(changePassword,"blur",function(){
+        change_flag[1] = 0;
+        var param = infors.password;
+        var passwordStr = changePassword.value.replace(trimReg,'');
+        if(passwordStr == ""){
+            cPassword.innerHTML = param.null;
+            var classVal = changePassword.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changePassword.parentNode.setAttribute("class",classVal );
+        }else if(!lengthTest.test(passwordStr)){
+            cPassword.innerHTML = param.error;
+            var classVal = changePassword.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changePassword.parentNode.setAttribute("class",classVal );
+        }else{
+            cPassword.innerHTML = param.right;
+            var classVal = changePassword.parentNode.getAttribute("class");
+            classVal = classVal.concat(" correct");
+            changePassword.parentNode.setAttribute("class",classVal );
+            change_flag[1] = 1;
         }
     });
     addEvent(sureValue,"focus",function(){
@@ -129,6 +195,39 @@ window.onload = function(){
             classVal = classVal.concat(" correct");
             sureValue.parentNode.setAttribute("class",classVal );
             flag[2] = 1;
+        }
+    });
+    //修改密码的确认
+    addEvent(changeSure,"focus",function(){
+        var param = infors.sure;
+        cSure.innerHTML = param.remind;
+        changeSure.parentNode.className = "form-group";
+    });
+    addEvent(changeSure,"blur",function(){
+        change_flag[2] = 0;
+        var param = infors.sure;
+        var sureStr = changeSure.value;
+        if(sureStr == ""){
+            cSure.innerHTML = param.null;
+            var classVal = changeSure.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changeSure.parentNode.setAttribute("class",classVal );
+        }else if(!lengthTest.test(sureStr)){
+            cSure.innerHTML = param.length;
+            var classVal = changeSure.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changeSure.parentNode.setAttribute("class",classVal );
+        }else if(sureStr !== changePassword.value){
+            cSure.innerHTML = param.error;
+            var classVal = changeSure.parentNode.getAttribute("class");
+            classVal = classVal.concat(" error");
+            changeSure.parentNode.setAttribute("class",classVal );
+        }else{
+            cSure.innerHTML = param.right;
+            var classVal = changeSure.parentNode.getAttribute("class");
+            classVal = classVal.concat(" correct");
+            changeSure.parentNode.setAttribute("class",classVal );
+            change_flag[2] = 1;
         }
     });
     addEvent(emailValue,"focus",function(){
@@ -172,6 +271,22 @@ window.onload = function(){
             submit.disabled = false;
         }else{
             submit.disabled = true;
+        }
+    });
+    addEvent(cSubmit,"mouseover",function(){
+        var con = 0;
+        for(var i=0;i<3;i++){
+            if(change_flag[i] == 0){
+                con = 0;
+                break;
+            }else{
+                con = 1;
+            }
+        }
+        if(con == 1){
+            cSubmit.disabled = false;
+        }else{
+            cSubmit.disabled = true;
         }
     });
     addEvent(shoplist,"click",function(){

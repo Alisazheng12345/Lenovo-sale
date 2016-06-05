@@ -27,6 +27,22 @@ $(document).ready(function(){
             }
         });
     });
+    $("#sum").click(function(){
+        var money = $(".sum").text();
+        var flag = window.confirm("总价是："+money+"是否结算？");
+        if(flag){
+            console.log(flag);
+            $.ajax({
+                type: "POST",
+                url: "/account",
+                dataType: "json",
+                success: function(msg){
+                    alert(msg.success);
+                    window.location.reload();
+                }
+            });
+        }
+    })
     $(".common_spread").click(function(){
         $(".common_hide").slideToggle();
     })
