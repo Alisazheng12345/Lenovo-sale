@@ -215,7 +215,7 @@ router.post('/change',function(req,res){
 			if(err){
 				res.render('warning',{title:'用户名不存在'});
 			}else{
-				user.update({username:name},{{$set:password:password}},function(err,docs){
+				user.update({username:name,password:password},function(err,docs){
 					if(err){
 						console.log(err);
 					}else{
