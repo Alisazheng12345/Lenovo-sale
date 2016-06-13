@@ -8,6 +8,7 @@ window.onload = function(){
     var emailValue = document.getElementById("email");
     var emailInfor = document.getElementById("emailRemind");
     var submit = document.getElementById("submit");
+    var submit_parent = submit.parentNode;
     var changeName = document.getElementById("change_name");
     var changePassword = document.getElementById("change_password");
     var changeSure = document.getElementById("change_sure");
@@ -15,6 +16,7 @@ window.onload = function(){
     var cPassword = document.getElementById("c_password");
     var cSure = document.getElementById("c_sure");
     var cSubmit = document.getElementById("change_submit");
+    var cSubmit_parent = cSubmit.parentNode;
     var lengthTest = /^.{4,16}$/;
     var chineseReg = /[\u4E00-\uFA29]|[\uE7C7-\uE7F3]/g;
     var trimReg = /^\s+|\s$/g;
@@ -257,7 +259,7 @@ window.onload = function(){
             flag[3] = 1;
         }
     });
-    addEvent(submit,"mouseover",function(){
+    addEvent(submit_parent.parentNode,"mousemove",function(){
         var con = 0;
         for(var i=0;i<4;i++){
             if(flag[i] == 0){
@@ -273,7 +275,23 @@ window.onload = function(){
             submit.disabled = true;
         }
     });
-    addEvent(cSubmit,"mouseover",function(){
+    // submit_parent.parentNode.addEventListener("mousemove",function(){
+    //     var con = 0;
+    //     for(var i=0;i<4;i++){
+    //         if(flag[i] == 0){
+    //             con = 0;
+    //             break;
+    //         }else{
+    //             con = 1;
+    //         }
+    //     }
+    //     if(con == 1){
+    //         submit.disabled = false;
+    //     }else{
+    //         submit.disabled = true;
+    //     }
+    // });
+    addEvent(cSubmit_parent.parentNode,"mousemove",function(){
         var con = 0;
         for(var i=0;i<3;i++){
             if(change_flag[i] == 0){

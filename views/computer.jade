@@ -1,4 +1,4 @@
-extends layout
+﻿extends layout
 
 block content
   .container
@@ -24,9 +24,9 @@ block content
       .hot 热门推荐
       -for(var i in computers)
         if(i<3)
-          .img_container
+          div.img_container
             a(href="/computer/#{computers[i]._id}")
-              img(src="/images/imgs/#{computers[i].name}.jpg")
+              img(src="#{computers[i].images}")
             h5
               a(href="/computer/#{computers[i]._id}") #{computers[i].name}
             p.cost ¥#{computers[i].cost}

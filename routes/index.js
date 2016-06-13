@@ -45,7 +45,7 @@ router.get('/',function(req,res){
 		}
 		var username = req.session.username;
 		res.render('index',{
-			title: '首页',
+			title: '联想中国(Lenovo China)笔记本电脑,平板电脑,手机,台式机,服务器,外设数码-联想商城',
 			username: username,
 			computers: computers
 		})
@@ -71,7 +71,7 @@ router.get('/computer/:id',function(req,res){
 	computer.findById(id,function(err,computer_one){
 		computer.findShow(function(errs,computers){
 			res.render('computer',{
-				title: '详情页',
+				title: computer_one.name,
 				username: req.session.username,
 				computer: computer_one,
 				computers: computers
@@ -83,7 +83,7 @@ router.get('/computer/:id',function(req,res){
 router.get('/Lenovo',function(req,res){
 	computer.fetch(function(err,computers){
 		res.render('Lenovo',{
-			title: "Lenovo电脑",
+			title: "联想Lenovo频道-联想官方网上商城，联想最新电脑，联想优惠电脑",
 			username: req.session.username,
 			computers: computers
 		})
@@ -93,7 +93,7 @@ router.get('/Lenovo',function(req,res){
 router.get('/Thinkpad',function(req,res){
 	computer.fetch(function(err,computers){
 		res.render('Thinkpad',{
-			title: "Thinkpad电脑",
+			title: "ThinkPad在线商城 - ThinkWorld官方网站",
 			username: req.session.username,
 			computers: computers
 		})
@@ -102,7 +102,7 @@ router.get('/Thinkpad',function(req,res){
 //初始化后台
 router.get('/admin',function(req,res){
 	res.render('admin',{
-		title: '后台',
+		title: 'Lenovo后台',
 		computer: {
 			name: '',
 			type: ''
@@ -116,7 +116,7 @@ router.get('/admin/list',function(req,res){
 			console.log(err);
 		}else{
 			res.render('list',{
-				title: '修改列表页',
+				title: 'Lenovo商品列表',
 				computers: computers
 			})
 		}
@@ -128,7 +128,7 @@ router.get('/admin/update/:id',function(req,res){
 	if(id){
 		computer.findById(id,function(err,computer){
 			res.render('update',{
-				title: '修改',
+				title: 'Lenovo修改商品',
 				computer: computer
 			})
 		})
@@ -137,32 +137,37 @@ router.get('/admin/update/:id',function(req,res){
 
 //用户功能部分
 //用户登录
-router.post('/login', function(req, res) {
-    var query_doc = {username: req.body.username, password: req.body.password};
-    user.find({username:query_doc.username},function(err,docs){
-    	if(docs == ""){
+router.post('/login',function(req,res){
+	var username = req.body.username;
+	var password = req.body.password;
+	user.find({username: username},function(err,docs){
+		if(docs == ""){
             console.log("login failed in " + new Date());
-            res.render('warning', { title: '用户名不存在，请重新登录' });   	
-    	}else{
+            var msg = {
+				success: "用户名不存在，请重新登录"
+			};  	
+            res.send(msg);
+		}else{
 	    	var text = eval('('+ docs +')');
-	    	if(text.password == query_doc.password){
-	            console.log(query_doc.username + ": login success in " + new Date());
+	    	if(text.password == password){
+	            console.log(username + ": login success in " + new Date());
 	            computer.findShow(function(err,computers){
-	            	req.session.username = query_doc.username;
-	            	console.log(req.session.username);
-	            	res.render('index', { 
-	            		title: '首页',
-	            		username: req.session.username,
-	            		computers: computers 
-	            	});  	            	
+	            	req.session.username = username;
+		            var msg = {
+						success: 1
+					};  	
+		            res.send(msg);             	
 	            })
 	    	}else{
 	            console.log("login failed in " + new Date());
-	            res.render('warning', { title: '密码错误' });    		
-	    	}	    		
-    	}
-    });
-});
+	            var msg = {
+					success: "密码错误"
+				};  	
+	            res.send(msg);  		
+	    	}	 
+		}
+	})
+})
 //用户注册
 var count = 0;
 router.post('/logon',function(req,res){
@@ -215,7 +220,7 @@ router.post('/change',function(req,res){
 			if(err){
 				res.render('warning',{title:'用户名不存在'});
 			}else{
-				user.update({username:name,password:password},function(err,docs){
+				user.update({username:name},{$set:{password:password}},function(err){
 					if(err){
 						console.log(err);
 					}else{
@@ -268,7 +273,8 @@ router.post('/shoplist',function(req,res){
 			var type = doc.type;
 			var infor = doc.infor;
 			var cost = doc.cost;
-			shoplist.create({username:username, name: name, type: type, infor: infor, cost: cost},function(err,docs){
+			var images = doc.images;
+			shoplist.create({username:username, name: name, type: type, infor: infor, images: images,cost: cost},function(err,docs){
 				if(err){
 					console.log(err);
 				}else{
@@ -291,7 +297,7 @@ router.post('/shoplist/removeOne',function(req,res){
 			console.log("删除成功"+ username);
 			shoplist.findName(username,function(err,shoplists){
 				res.render('shoplist',{
-					title: '购物车',
+					title: '联想商城-购物车',
 					username: username,
 					shoplists: shoplists
 				})
@@ -305,7 +311,7 @@ router.get('/shoplist',function(req,res){
 	computer.findShow(function(errs,computers){
 		shoplist.findName(username,function(err,shoplists){
 			res.render('shoplist',{
-				title: '购物车',
+				title: '联想商城-购物车',
 				username: username,
 				shoplists: shoplists,
 				computers: computers
@@ -321,14 +327,6 @@ router.post('/account',function(req,res){
 			console.log(err);
 		}else{
 			console.log("结算成功" + username);
-			// shoplist.findName(username,function(err,shoplists){
-			// 	console.log(shoplists);
-			// 	res.render('shoplist',{
-			// 		title: '购物车',
-			// 		username: username,
-			// 		shoplists: shoplists
-			// 	})
-			// });
 			var msg = {
 				success: "结算成功"
 			};
@@ -370,11 +368,14 @@ router.post('/admin/update/success',function(req,res){
 		if(err){
 			console.log(err);
 		}else{
-			computer.findById(id,function(err,computer){
-				res.render('computer',{
-					title: '详情页',
-					computer: computer
-				})
+			computer.findById(id,function(err,computer_one){
+			    computer.findShow(function(err,computers){
+			    	res.render('computer',{
+						title: computer_one.name,
+						computer: computer_one,
+						computers: computers
+					})
+			    })
 			})
 		}
 	})
@@ -419,7 +420,7 @@ router.post('/admin/computer/new',function(req,res){
 			});
 		}else{
 			res.render('admin',{
-				title: '后台',
+				title: 'Lenovo后台',
 				warning: '已有此商品',
 				computer: {
 					name: '',
@@ -439,7 +440,7 @@ router.post('/admin/delete',function(req,res){
 				console.log(err);
 			}else{
 				res.render('list',{
-					title: '修改列表页',
+					title: 'Lenovo商品列表',
 					computers: computers
 				})
 			}

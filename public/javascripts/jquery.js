@@ -1,4 +1,4 @@
-$(document).ready(function(){
+﻿$(document).ready(function(){
     $("#shoplist").click(function(){
         var id = $("#id").text();
         var data = {"id": id};
@@ -29,7 +29,14 @@ $(document).ready(function(){
     });
     $("#sum").click(function(){
         var money = $(".sum").text();
-        var flag = window.confirm("总价是："+money+"是否结算？");
+        var reg = /[^0-9]+/g;
+        var str = money;
+        str = str.replace(reg, '');
+        if(str == 0){
+            alert("购物车为空!");
+            return 0;
+        }
+        var flag = window.confirm(money+"是否结算？");
         if(flag){
             console.log(flag);
             $.ajax({
@@ -42,33 +49,55 @@ $(document).ready(function(){
                 }
             });
         }
+    });
+    $("#login_submit").click(function(){
+        var username = $("#login_username").val();
+        var password = $("#login_password").val();
+        var data = {"username":username,"password":password};
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            dataType: "json",
+            data: data,
+            success: function(msg){             
+                if(msg.success == 1){
+                    window.location.reload();
+                }else{
+                    $("#login_msg").empty();
+                    $("#login_msg").append(msg.success);                     
+                }                   
+            }
+        })
     })
+    $("#login_username,#login_password").focus(function(){
+        $("#login_msg").empty();
+    });
     $(".common_spread").click(function(){
-        $(".common_hide").slideToggle();
+        $(".common_hide").stop().slideToggle();
     })
     $(".light_spread").click(function(){
-        $(".light_hide").slideToggle();
+        $(".light_hide").stop().slideToggle();
     })
     $(".hot_spread").click(function(){
-        $(".hot_hide").slideToggle();
+        $(".hot_hide").stop().slideToggle();
     })
     $(".game_spread").click(function(){
-        $(".game_hide").slideToggle();
+        $(".game_hide").stop().slideToggle();
     })
     $(".change_spread").click(function(){
-        $(".change_hide").slideToggle();
+        $(".change_hide").stop().slideToggle();
     })
     $(".x_spread").click(function(){
-        $(".x_hide").slideToggle();
+        $(".x_hide").stop().slideToggle();
     })
     $(".t_spread").click(function(){
-        $(".t_hide").slideToggle();
+        $(".t_hide").stop().slideToggle();
     })
     $(".s_spread").click(function(){
-        $(".s_hide").slideToggle();
+        $(".s_hide").stop().slideToggle();
     })
     $(".p_spread").click(function(){
-        $(".p_hide").slideToggle();
+        $(".p_hide").stop().slideToggle();
     })
     $("#login").click(function(){
         $(".logon").slideUp();

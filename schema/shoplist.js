@@ -5,6 +5,7 @@ var shopScheMa = new Schema({
     name: String,
     type: String,
     infor: String,
+    images: String,
     cost: Number
 }); 
 

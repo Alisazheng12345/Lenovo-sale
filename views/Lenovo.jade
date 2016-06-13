@@ -1,4 +1,4 @@
-extends layout
+﻿extends layout
 
 block content
   .container
@@ -43,7 +43,7 @@ block content
                 .col-sm-3.col-xs-12.item
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -53,7 +53,7 @@ block content
                 .col-sm-3.col-xs-12.item.common_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -69,7 +69,7 @@ block content
                 .col-sm-3.col-xs-12.item
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -79,7 +79,7 @@ block content
                 .col-sm-3.col-xs-12.item.light_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -95,7 +95,7 @@ block content
                 .col-sm-3.col-xs-12.item
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -105,7 +105,7 @@ block content
                 .col-sm-3.col-xs-12.item.hot_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -121,7 +121,7 @@ block content
                 .col-sm-3.col-xs-12.item
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -131,7 +131,7 @@ block content
                 .col-sm-3.col-xs-12.item.game_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -147,7 +147,7 @@ block content
                 .col-sm-3.col-xs-12.item
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
@@ -157,7 +157,7 @@ block content
                 .col-sm-3.col-xs-12.item.change_hide
                   .img_container
                     a(href="/computer/#{computers[i]._id}")
-                      img(src="/images/imgs/#{computers[i].name}.jpg")
+                      img(src="#{computers[i].images}")
                     h4
                       a(href="/computer/#{computers[i]._id}") #{computers[i].name}
                     p.detail #{computers[i].infor}
