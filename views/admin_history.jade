@@ -1,0 +1,21 @@
+extends admin_head
+
+block content
+  .container
+    h1= title
+    table.table
+      tr
+        td 名称
+        td 用户
+        td 所属系列
+        td 信息
+        td 价格
+        td 购买时间
+      each item in histories
+        tr
+          td.name #{item.name}
+          td #{item.username}
+          td #{item.type}
+          td #{item.infor}
+          td #{item.cost}
+          td(id="time") #{item.createAt}

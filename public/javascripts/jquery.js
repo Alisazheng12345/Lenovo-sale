@@ -36,13 +36,36 @@
             alert("购物车为空!");
             return 0;
         }
-        var flag = window.confirm(money+"是否结算？");
+        var length = $(".count").length;
+        var name_item = $(".nameVal");
+        var type_item = $(".typeVal");
+        var infor_item = $(".inforVal");
+        var cost_item = $(".costVal");
+        var history = {
+            name:"",
+            type:"",
+            infor:"",
+            cost: ""
+        };
+        for(var i=0;i<length;i++){
+            var name = name_item[i].textContent;
+            var type = type_item[i].textContent;
+            var infor = infor_item[i].textContent;
+            var cost = cost_item[i].textContent;
+            history.name += name + "/";
+            history.type += type + "/";
+            history.infor += infor + "/";
+            history.cost += cost + "/";           
+        }
+        console.log(history);
+        var flag = window.confirm("总价是："+money+"是否结算？");
         if(flag){
             console.log(flag);
             $.ajax({
                 type: "POST",
                 url: "/account",
                 dataType: "json",
+                data: history,
                 success: function(msg){
                     alert(msg.success);
                     window.location.reload();
@@ -50,6 +73,25 @@
             });
         }
     });
+    $("#buy").click(function(){
+        var flag = window.confirm("确定购买？");
+        if(flag){
+            var name = $("#buy_name").text();
+            var type = $("#buy_type").text();
+            var infor = $("#buy_infor").text();
+            var cost = $("#buy_cost").text();
+            var data = {"name": name,"type": type,"infor": infor,"cost": cost};
+            $.ajax({
+                type: "POST",
+                url: "/buy",
+                dataType: "json",
+                data: data,
+                success: function(msg){
+                    alert(msg.success);
+                }
+            })            
+        }
+    })
     $("#login_submit").click(function(){
         var username = $("#login_username").val();
         var password = $("#login_password").val();
@@ -69,6 +111,21 @@
             }
         })
     })
+    // $("#search_btn").click(function(){
+    //     var searchVal = $("#search").val();
+    //     searchVal = searchVal.replace(/(^\s*)|(\s*$)/g, "");
+    //     var data = {"value":searchVal};
+    //     alert(data);
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/usersearch",
+    //         dataType: "json",
+    //         data: data,
+    //         success: function(msg){
+    //             console.log(msg.success);
+    //         }
+    //     })
+    // })
     $("#login_username,#login_password").focus(function(){
         $("#login_msg").empty();
     });

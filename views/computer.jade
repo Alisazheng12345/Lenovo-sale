@@ -6,17 +6,17 @@ block content
       li
         a(href="/") 首页
       li
-        a(href="/#{computer.type}") #{computer.type}
+        a(href="/#{computer.type}" id="buy_type") #{computer.type}
       li.active #{computer.name}
     .row
       .col-md-6.pic
         img(src="#{computer.images}")
       .col-md-6.information
-        h2 #{computer.name}
-        p #{computer.infor}
+        h2(id="buy_name") #{computer.name}
+        p(id="buy_infor") #{computer.infor}
         .price
-          span 商城价:
-          span.cost ¥#{computer.cost}
+          span 商城价:¥
+          span.cost(id="buy_cost") #{computer.cost}
         .buttons
           a.button(id="buy") 立即购买
           a.button(id="shoplist") 加入购物车

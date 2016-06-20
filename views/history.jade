@@ -1,4 +1,4 @@
-﻿extends layout
+extends layout
 
 block content
   .container.shoplist
@@ -6,31 +6,19 @@ block content
       img(src="/images/shoplist.jpg")
     table.table
       tr.titles
-        td.img 图片
         td 商品
         td.type 型号
         td.infor 商品信息
         td 价格
-        td 操作
-      each item in shoplists
-        tr.count
-          td.img
-            .img_container
-              img(src="#{item.images}")
-          td.nameVal #{item.name}
-          td.type.typeVal #{item.type}
-          td.infor.inforVal #{item.infor}
-          td.costVal #{item.cost}
-          td
-            form(action="/shoplist/removeOne" method="post")
-              input.hide(name="name" value="#{item.name}" type="text" readonly)
-              input.button_delete(type="submit" value="删除")
+        td 购买时间
+      each item in histories
+        tr
+          td #{item.name}
+          td.type #{item.type}
+          td.infor #{item.infor}
+          td #{item.cost}
+          td(id="time") #{item.createAt}
     hr
-    - var sums = 0;
-    - for(var i in shoplists)
-        - sums += shoplists[i].cost
-      p.sum 总价:  ¥#{sums}元
-    a.sum_button(id="sum") 结算
   footer.footer
   hr
   .container

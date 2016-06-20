@@ -38,18 +38,21 @@ html
                     if (computers[i].show == 1)
                       li
                         a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+            li
+              a(href="/search") 搜索
           form.navbar-form.navbar-right(role="search")
             .form-group
               //- input(type="text" class="form-control" placeholder="Search")
               //- button(type="submit" class="btn btn-default") 搜索
               if (username)
-                span.username(id="username") Hi,#{username}
-                a(href="/shoplist") 购物车
-                a(href="/clear") 注销
-                a.forget 修改密码
+                a(href="/history")
+                  span.username(id="username") Hi,#{username}
+                a.a_in_user(href="/shoplist") 购物车
+                a.a_in_user(href="/clear") 注销
+                a.forget.a_in_user 修改密码
               else
-                a(id="login") 登录
-                a(id="logon") 注册
+                a.a_in_user(id="login") 登录
+                a.a_in_user(id="logon") 注册
               //- span #{username}
           //- span(style="display:none") #{username}
     .container.login

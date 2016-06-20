@@ -6,6 +6,7 @@ var random = require('crypto');
 var user = require('../schema/user').user;
 var computer = require('../schema/computer').computer;
 var shoplist = require('../schema/shoplist').shoplist;
+var history = require('../schema/history').history;
 mongoose.connect('mongodb://localhost/computer_sale');
 // nodemailer
 var nodemailer = require("nodemailer");
@@ -17,24 +18,6 @@ var smtpTransport = nodemailer.createTransport({
         pass: "epzgcbmharkpbieb"
     }
   });
-
-// // 设置邮件内容
-// var mailOptions = {
-//   from: "Fred Foo <314339793@qq.com>", // 发件地址
-//   to: "15092220675@163.com", // 收件列表
-//   subject: "Hello world", // 标题
-//   html: "<b>thanks a for visiting!</b> 世界，你好！" // html 内容
-// }
-
-// // 发送邮件
-// smtpTransport.sendMail(mailOptions, function(error, response){
-//   if(error){
-//     console.log(error);
-//   }else{
-//     console.log("Message sent: " + response.message);
-//   }
-//   smtpTransport.close(); // 如果没用，关闭连接池
-// });
 
 //页面获取部分
 /* GET home page. */
@@ -52,13 +35,12 @@ router.get('/',function(req,res){
 	})
 });
  
-/*login*/
-router.get('/login', function(req, res){
-    res.render('login', { title: 'login' });
-});
-router.get('/logon', function(req, res){
-    res.render('login', { title: 'logon' });
-});
+//后台登陆
+router.get('/admin_login',function(req,res){
+	res.render('admin_login',{
+		title: '联想后台登陆'
+	})
+})
 //注销
 router.get('/clear',function(req,res){
 	req.session.username = '';
@@ -79,6 +61,17 @@ router.get('/computer/:id',function(req,res){
 		})
 	})
 });
+//历史页
+router.get('/history',function(req,res){
+	var username = req.session.username;
+	history.findByUser(username,function(err,histories){
+		res.render('history',{
+			title: "购物历史",
+			username: req.session.username,
+			histories: histories
+		});
+	})
+})
 //Lenovo列表页
 router.get('/Lenovo',function(req,res){
 	computer.fetch(function(err,computers){
@@ -94,6 +87,16 @@ router.get('/Thinkpad',function(req,res){
 	computer.fetch(function(err,computers){
 		res.render('Thinkpad',{
 			title: "ThinkPad在线商城 - ThinkWorld官方网站",
+			username: req.session.username,
+			computers: computers
+		})
+	})
+})
+//搜索页
+router.get('/search',function(req,res){
+	computer.fetch(function(err,computers){
+		res.render('search',{
+			title: "联想商城-搜索",
 			username: req.session.username,
 			computers: computers
 		})
@@ -134,7 +137,45 @@ router.get('/admin/update/:id',function(req,res){
 		})
 	}
 });
-
+//订单历史页
+router.get('/admin/history',function(req,res){
+	history.fetch(function(err,histories){
+		if(err){
+			console.log(err);
+		}else{
+			res.render('admin_history',{
+				title: "订单历史",
+				histories:histories
+			})
+		}
+	})
+})
+//立即购买
+router.post('/buy',function(req,res){
+	var username = req.session.username;
+	var name = req.body.name;
+	var type = req.body.type;
+	var infor = req.body.infor;
+	var cost = req.body.cost;
+	console.log(cost);
+	if(req.session.username != undefined){
+		history.create({username: username,name: name,type: type,infor: infor,cost: cost},function(err){
+			if(err){
+				console.log(err);
+			}else{
+				var msg = {
+					success: "购买成功"
+				}
+				res.send(msg);
+			}
+		})
+	}else{
+		var msg = {
+			success: "请先登录"
+		}
+		res.send(msg);
+	}
+})
 //用户功能部分
 //用户登录
 router.post('/login',function(req,res){
@@ -322,20 +363,85 @@ router.get('/shoplist',function(req,res){
 //购物车结算
 router.post('/account',function(req,res){
 	var username = req.session.username;
+	var name = req.body.name;
+	var type = req.body.type;
+	var infor = req.body.infor;
+	var cost = req.body.cost;
+	var name_items = name.split("/");
+	var type_items = type.split("/");
+	var infor_items = infor.split("/");
+	var cost_items = cost.split("/");
+	var length = name_items.length-1;
+	for(var i=0;i<length;i++){
+		history.create({username: username,name:name_items[i],type:type_items[i],infor:infor_items[i],cost:cost_items[i]},function(err){
+			if(err){
+				console.log(err);
+			}else{
+				console.log("结算成功：" + username);
+			}
+		})			
+	}
 	shoplist.removeAll(username,function(err,doc){
 		if(err){
 			console.log(err);
 		}else{
-			console.log("结算成功" + username);
 			var msg = {
-				success: "结算成功"
+				success:"结算成功"
 			};
 			res.send(msg);
 		}
 	});
 })
+//搜索
+router.post('/search',function(req,res){
+	var value = req.body.value;
+	// value = value.replace(/(^\s*)|(\s*$)/g, "");
+	// value = "{$regex:/" + value + ".*/i}";
+	// {"tname": {$regex:/测试.*/i}}
+	console.log(value);
+	// computer.findSearch(value,function(err,computers){
+	// 	if(err){
+	// 		console.log(err);
+	// 	}else{
+	// 		console.log(computers);
+	// 		res.render('search',{
+	// 			title: "联想商城-搜索",
+	// 			computers: computers
+	// 		})
+	// 	}
+	// })
+	computer.find({"name": {$regex: value, $options:'i'}},function(err,computers){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(computers);
+			res.render('search',{
+				title: "联想商城-搜索",
+				computers: computers
+			})
+		}
+	})
+})
 
 //管理员功能部分
+//管理员登录
+router.post('/admin_login/success', function(req, res) {
+    var query_doc = {username: req.body.username, password: req.body.password};
+    console.log(req.body.username);
+    if(query_doc.username == "admin" && query_doc.password == "root"){
+    	console.log("后台登录成功！")
+    	computer.fetch(function(err,computers){
+			if(err){
+				console.log(err);
+			}else{
+				res.render('list',{
+					title: '修改列表页',
+					computers: computers
+				})
+			}
+		})
+    }
+});
 //修改商品
 router.post('/admin/update/success',function(req,res){
 	var id = req.body.id;

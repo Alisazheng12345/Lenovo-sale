@@ -5,6 +5,7 @@ html
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title= title
+    link(href="/images/favicon.ico",rel="shortcut icon")
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet',href='/stylesheets/style.css')
     script(src="/javascripts/jquery-1.12.4.js")
@@ -27,4 +28,6 @@ html
                 span.sr-only (current)
             li
               a(href="/admin") 添加商品
+            li
+              a(href="/admin/history") 订单历史
     block content

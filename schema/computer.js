@@ -70,6 +70,11 @@ compScheMa.statics = {
 		.sort('meta.updateAt')
 		.exec(cb);
 	},
+	findSearch: function(value,cb){
+		return this
+		.find({name: /value/})
+		.exec(cb);
+	},
 	removeOne: function(name,cb){
 		return this
 		.remove({name: name})

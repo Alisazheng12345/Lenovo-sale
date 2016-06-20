@@ -10,6 +10,9 @@
 .clear{
 	clear: both;
 }
+#time{
+	font-size: 12px;
+}
 .about{
 	margin-left: 50px;
 }
@@ -37,7 +40,7 @@ a:link,a:visited,a:hover,a:active{
 .navbar{
 	margin-bottom: 0;
 }
-.form-group a{
+.form-group .a_in_user{
 	text-decoration: none;
 	display: inline-block;
 	height: 20px;
@@ -130,6 +133,7 @@ a:link,a:visited,a:hover,a:active{
 }
 .footer{
 	background-color: #000;
+	margin-bottom: 0;
 }
 .center{
 	margin-bottom: 30px;
@@ -149,7 +153,7 @@ a:link,a:visited,a:hover,a:active{
     .center,.breadcrumb{
     	display: none;
     }
-    .login{
+    .logon,.login{
     	width: 290px;
     	left: 50%;
     	margin-left: -145px;
@@ -255,6 +259,9 @@ a:link,a:visited,a:hover,a:active{
 }
 .item{
 	padding: 0;
+}
+.item_computer{
+	height: 290px;
 }
 .img_container img{
 	width: 100%;
@@ -419,7 +426,6 @@ a:link,a:visited,a:hover,a:active{
 	font-size: 16px;
 }
 .shoplist .table td{
-	line-height: 120px;
 	font-size: 16px;
 }
 @media screen and (max-width: 530px) {
@@ -462,4 +468,68 @@ a:link,a:visited,a:hover,a:active{
 .warning{
 	text-align: center;
 	margin-top: 20px;
+}
+/*admin_login*/
+.form-signin {
+  max-width: 530px;
+  padding: 15px;
+  margin: 200px auto;
+}
+.form-signin .form-signin-heading{
+  margin-bottom: 10px;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*search*/
+.search-form{
+	margin: 30px auto;
+	width: 80%;
+}
+#search{
+	width: 80%;
+	margin: 0 auto;
+	float: left;
+	border-radius: 0;
+	border-right: none;
+	height: 40px;
+}
+.search-btn{
+	float: right;
+	width: 20%;
+	border-radius: 0;
+	background: red;
+	color: #fff;
+	height: 40px;
+}
+.search-btn:action{
+	color: #fff;
+}
+.search-btn:hover{
+	color: #fff;
+}
+.search-box{
+	margin: 40px;
+}
+.search_result{
+	min-height: 490px;
 }

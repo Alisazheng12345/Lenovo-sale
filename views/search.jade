@@ -1,36 +1,21 @@
-﻿extends layout
+extends layout
 
 block content
-  .container.shoplist
-    .img_shoplist
-      img(src="/images/shoplist.jpg")
-    table.table
-      tr.titles
-        td.img 图片
-        td 商品
-        td.type 型号
-        td.infor 商品信息
-        td 价格
-        td 操作
-      each item in shoplists
-        tr.count
-          td.img
-            .img_container
-              img(src="#{item.images}")
-          td.nameVal #{item.name}
-          td.type.typeVal #{item.type}
-          td.infor.inforVal #{item.infor}
-          td.costVal #{item.cost}
-          td
-            form(action="/shoplist/removeOne" method="post")
-              input.hide(name="name" value="#{item.name}" type="text" readonly)
-              input.button_delete(type="submit" value="删除")
-    hr
-    - var sums = 0;
-    - for(var i in shoplists)
-        - sums += shoplists[i].cost
-      p.sum 总价:  ¥#{sums}元
-    a.sum_button(id="sum") 结算
+  .container
+    .col-lg-12.col-md-12.col-xs-12.search-box
+      form.search-form(action="/search" method="post")
+        input.form-control(type="text" name="value" id="search")
+        button.btn.search-btn(type="submit" id="search_btn") 搜索
+    .col-lg-12.col-md-12.col-xs-12.search_result
+      - for(var i in computers)
+        .col-sm-4.col-xs-12.item.item_computer
+          .img_container
+            a(href="/computer/#{computers[i]._id}")
+              img(src="#{computers[i].images}")
+            h4
+              a(href="/computer/#{computers[i]._id}") #{computers[i].name}
+            p.detail #{computers[i].infor}
+            p.cost ¥#{computers[i].cost}
   footer.footer
   hr
   .container
